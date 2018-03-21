@@ -1,0 +1,10 @@
+{
+    "files.exclude": {
+        "**/*.pyc": true,
+        "**/*.map": true,
+        "**/__pycache__": true,
+    },
+    "[html]": {
+        "editor.formatOnSave": false
+    }
+}
