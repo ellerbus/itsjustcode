@@ -1,0 +1,61 @@
+{% import 'helpers.j2' as helpers -%}
+{% set base_class = table.name | pascal_case -%}
+{% set apiprefix = table.name | split_name | join('/') -%}
+{% set varname = base_class | short_name -%}
+module {{ namespace }}
+{ 
+	export class {{ base_class }}Repository
+	{
+		static $inject = ['$http'];
+
+		url = '{{ apiprefix }}/';
+		
+		constructor(private $http: ng.IHttpService)
+		{
+		}
+		
+		query(): ng.IPromise<{{ base_class }}[]>
+		{
+			var url = this.url;
+			
+			var config: ng.IRequestShortcutConfig = { };
+			
+			return this.$http.get(url, config);
+		}
+
+		get({% for column in table.primary_key -%}
+              {{ column.name | camel_case }}: {{ helpers.typescript_type(column) }}
+              {%- if not loop.last -%}, {%- endif -%}
+            {%- endfor -%}): ng.IPromise<{{ base_class }}>
+		{
+			var url = this.url + '{% for column in table.primary_key -%}
+              {{ column.name | camel_case }}: {{ helpers.typescript_type(column) }}
+              {%- if not loop.first -%}/{%- endif -%}
+            {%- endfor -%}';
+			
+			var config: ng.IRequestShortcutConfig = { 
+				params: {
+                {%- for column in table.primary_key -%}
+                    {{ column.name | camel_case }}: {{ helpers.typescript_type(column) }}
+                    {%- if not loop.last -%}, {%- endif -%}
+                {%- endfor -%}
+                }
+			};
+
+			return this.$http.get(url, config);
+		}
+		
+		save({{ varname }}: {{ base_class }}): ng.IPromise<{{ base_class }}>
+		{
+			var url = this.url;
+			
+			var config: ng.IRequestShortcutConfig = {
+				data: {{ varname }}
+			};
+			
+			return this.$http.post(url, {{ varname }}, config);
+		}
+	}
+	
+	angular.module('app').service('{{ base_class }}Repository', {{ base_class }}Repository);
+}

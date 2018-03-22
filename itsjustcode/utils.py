@@ -58,3 +58,9 @@ def pascal_case(name):
     '''
     '''
     return ''.join(s.capitalize() for s in split_name(name))
+
+
+def label_case(name):
+    '''
+    '''
+    return ' '.join(s.capitalize() for s in split_name(name))

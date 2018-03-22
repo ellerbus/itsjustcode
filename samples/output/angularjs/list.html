@@ -1,0 +1,20 @@
+<p ng-show="vm.tables == null" class="text-center">
+	<i class="fa fa-spinner fa-spin"></i> Gathering the requested  ...
+</p>
+
+<table co-table ng-hide="vm.tables == null">
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Name</th>
+			<th>Cost</th>
+			<th>Started At</th>
+		</tr>
+	</thead>
+	<tr ng-repeat="table in vm.tables">
+		<td ng-bind="table.id"></td>
+		<td ng-bind="table.name"></td>
+		<td ng-bind="table.cost"></td>
+		<td ng-bind="table.startedAt"></td>
+	</tr>
+</table>

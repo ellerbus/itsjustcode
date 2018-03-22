@@ -1,0 +1,18 @@
+{% import 'helpers.j2' as helpers -%}
+module {{ namespace }}
+{
+	export class {{ table.name | pascal_case}}
+	{ 
+		{%- for column in table.columns %}
+        {{ column.name | camel_case }}: {{ helpers.typescript_type(column) }};
+		{%- endfor %}
+
+		constructor(properties?: any)
+		{
+			for (var key in properties)
+			{
+				this[key] = properties[key];
+			}
+		}
+	}
+}

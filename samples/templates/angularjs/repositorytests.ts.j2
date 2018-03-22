@@ -1,0 +1,109 @@
+{% include 'NamingConventions' -%}
+{% capture PROJECT %}{{ SOLUTION }}.WebApplication{% endcapture -%}
+{% capture FILENAME %}{{ PROJECT }}\Sniper\{{ BASECLASSES }}\{{ BASECLASS }}RepositoryTests.ts{% endcapture -%}
+module {{ SOLUTION | downcase }}
+{
+    describe('{{ BASECLASS }} Repository', () =>
+    {
+        var $q: ng.IQService;
+        var $rootScope: ng.IRootScopeService;
+
+        var mockRepoService: any;
+        var subjectUnderTest: {{ BASECLASS }}Repository;
+        
+        beforeEach(() => angular.mock.module('app'));
+
+        beforeEach(() =>
+        {
+            mockRepoService = jasmine.createSpyObj('RepositoryService', ['get', 'put', 'post', 'delete']);
+
+            angular.mock.module(($provide: ng.auto.IProvideService) =>
+            {
+                $provide.service('RepositoryService', () => mockRepoService);
+            });
+            
+            angular.mock.inject((_$q_: ng.IQService, _$rootScope_: ng.IRootScopeService, _$injector_) =>
+            {
+                var $injector = _$injector_;
+                
+                $q = _$q_;
+                $rootScope = _$rootScope_;
+
+                subjectUnderTest = <{{ BASECLASS }}Repository>$injector.get('{{ BASECLASS }}Repository');
+            });
+        });
+        
+        it('Should Have Base URL', ()=>
+        {
+            expect(subjectUnderTest.url).toBe('{{ APIPREFIX }}/');
+        });
+
+
+        it('Should Query', () =>
+        {
+            //  arrange
+            var items = [new {{ BASECLASS }}()];
+
+            mockRepoService.get.and.returnValue($q.when(items));
+
+            //  act
+            var actual = null;
+
+            subjectUnderTest
+                .query()
+                .then((data) => actual = data);
+
+            $rootScope.$apply();
+
+            //  assert
+            expect(actual).toBe(items);
+            
+            expect(mockRepoService.get).toHaveBeenCalled();
+            
+            var url = mockRepoService.get.calls.mostRecent().args[0];
+            
+            expect(url).toBe(subjectUnderTest.url);
+        });
+
+        it('Should Get', () =>
+        {
+            //  arrange
+            var item = new {{ BASECLASS }}();
+
+            spyOn(mockRepoService, 'get').and.returnValue($q.when(item));
+
+            //  act
+            var actual = null;
+
+            subjectUnderTest
+                .get({% for column in table.primary_keys %}item.{{ column.parameter_name }}{% if forloop.last == false %}, {% endif %}{% endfor %})
+                .then((data) => actual = data);
+
+            $rootScope.$apply();
+
+            //  assert
+            expect(actual).toBe(item);
+        });
+
+
+        it('Should Save', () =>
+        {
+            //  arrange
+            var item = new {{ BASECLASS }}();
+
+            spyOn(mockRepoService, 'post').and.returnValue($q.when(item));
+
+            //  act
+            var actual = null;
+
+            subjectUnderTest
+                .add(item)
+                .then((data) => actual = data);
+
+            $rootScope.$apply();
+
+            //  assert
+            expect(actual).toBe(item);
+        });
+    });
+}

@@ -1,0 +1,38 @@
+{%- macro typescript_type(column) -%}
+{% set class_name = column.type.__class__.__name__.lower() -%}
+{% if class_name == 'array' %}any{% endif -%}
+{% if class_name == 'bigint' %}number{% endif -%}
+{% if class_name == 'biginteger' %}number{% endif -%}
+{% if class_name == 'binary' %}number{% endif -%}
+{% if class_name == 'blob' %}any{% endif -%}
+{% if class_name == 'boolean' %}boolean{% endif -%}
+{% if class_name == 'boolean' %}boolean{% endif -%}
+{% if class_name == 'char' %}string{% endif -%}
+{% if class_name == 'clob' %}any{% endif -%}
+{% if class_name == 'date' %}Date{% endif -%}
+{% if class_name == 'datetime' %}Date{% endif -%}
+{% if class_name == 'decimal' %}number{% endif -%}
+{% if class_name == 'enum' %}number|string{% endif -%}
+{% if class_name == 'float' %}number{% endif -%}
+{% if class_name == 'int' %}number{% endif -%}
+{% if class_name == 'integer' %}number{% endif -%}
+{% if class_name == 'interval' %}any{% endif -%}
+{% if class_name == 'json' %}any{% endif -%}
+{% if class_name == 'largebinary' %}any{% endif -%}
+{% if class_name == 'nchar' %}string{% endif -%}
+{% if class_name == 'nvarchar' %}string{% endif -%}
+{% if class_name == 'numeric' %}number{% endif -%}
+{% if class_name == 'pickletype' %}any{% endif -%}
+{% if class_name == 'real' %}number{% endif -%}
+{% if class_name == 'smallint' %}number{% endif -%}
+{% if class_name == 'smallinteger' %}number{% endif -%}
+{% if class_name == 'string' %}string{% endif -%}
+{% if class_name == 'text' %}string{% endif -%}
+{% if class_name == 'time' %}Date{% endif -%}
+{% if class_name == 'timestamp' %}Date{% endif -%}
+{% if class_name == 'typedecorator' %}any{% endif -%}
+{% if class_name == 'unicode' %}string{% endif -%}
+{% if class_name == 'unicodetext' %}string{% endif -%}
+{% if class_name == 'varbinary' %}any{% endif -%}
+{% if class_name == 'varchar' %}string{% endif -%}
+{%- endmacro -%}

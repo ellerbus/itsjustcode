@@ -1,0 +1,54 @@
+{% import 'helpers.j2' as helpers %}
+{% set base_class = table.name | pascal_case -%}
+{% set varname = base_class | short_name -%}
+{% set onloading = 'onloading' + base_class -%}
+{% set onsaved = 'onsaved' + base_class -%}
+module {{ namespace }}
+{ 
+	interface IRouteParams extends ng.route.IRouteParamsService
+	{
+        {% for column in table.primary_key -%}
+        {{ column.name | camel_case }}: {{ helpers.typescript_type(column) }};
+        {%- endfor %}
+	}
+
+	class {{ base_class }}DetailController
+	{
+		static $inject = [
+            '$routeParams',
+			'$location',
+			'{{ base_class }}Repository'];
+
+		{{ varname }}: {{ base_class }} = null;
+		
+		constructor(
+			private $routeParams: IRouteParams,
+			private $location: ng.ILocationService,
+			private {{ base_class }}Repository: {{ namespace }}.{{ base_class }}Repository)
+		{
+			{{ base_class }}Repository
+				.get({% for column in table.primary_key -%}$routeParams.{{ column.name | camel_case }}{%- if not loop.last -%}, {%- endif -%}{%- endfor -%})
+				.then(this.{{ onloading }});
+		}
+
+        private {{ onloading }} = (data: {{ base_class }}) => 
+        {
+            this.{{ varname }} = data;
+        }
+		
+		save(): ng.IPromise<void>
+		{
+            this.{{ base_class }}Repository
+                .save(this.{{ varname }})
+                .then(this.onsaved);
+		}
+
+        private {{ onsaved }} = (data: {{ base_class }}) => 
+        {
+            //  either overlay, redirect, or flash message
+            angular.extend(this.{{ varname }}, data);
+        }
+	}
+	
+	angular.module('app').controller('{{ base_class }}DetailController', {{ base_class }}DetailController);
+}

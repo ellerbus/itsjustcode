@@ -1,0 +1,26 @@
+{% set base_class = table.name | pascal_case -%}
+{% set varnames = (base_class | short_name) + 's' -%}
+{% set onloading = 'onloading' + base_class + 's' -%}
+module {{ namespace }}
+{ 
+	class {{ base_class }}ListController
+	{
+		static $inject = ['{{ base_class }}Repository'];
+
+		{{ varnames }}: {{ base_class }}[] = null;
+		
+		constructor(private {{ base_class }}Repository: {{ namespace }}.{{ base_class }}Repository)
+		{
+			{{ base_class }}Repository
+				.query()
+				.then(this.{{ onloading }});
+		}
+
+        private {{ onloading }} = (data: {{ base_class }}[]) =>
+        {
+            this.{{ varnames }} = data;
+        }
+	}
+	
+	angular.module('app').controller('{{ base_class }}ListController', {{ base_class }}ListController);
+}

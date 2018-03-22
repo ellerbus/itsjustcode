@@ -1,0 +1,49 @@
+<p ng-show="vm.table == null" class="text-center">
+	<i class="fa fa-spinner fa-spin"></i> Gathering the requested SampleTable Data ...
+</p>
+
+<form name="vm.tableForm" novalidate co-error-display co-form ng-hide="vm.table == null">
+
+	<div class="form-group" ng-hide="vm.action == 'create'">
+		<label class="col-sm-4 control-label">
+			Id
+		</label>
+		<div class="col-sm-8 form-control-static" ng-bind="vm.table.id"></div>
+	</div>
+
+	
+    <div class="form-group">
+        <label class="col-sm-4 control-label">
+            Name
+        </label>
+        <div class="col-sm-8">
+            <input class="form-control" name="name" placeholder="Name"
+                ng-model="vm.table.name" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">
+            Cost
+        </label>
+        <div class="col-sm-8">
+            <input class="form-control" name="cost" placeholder="Cost"
+                ng-model="vm.table.cost" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">
+            Started At
+        </label>
+        <div class="col-sm-8">
+            <input class="form-control" name="startedAt" placeholder="Started At"
+                ng-model="vm.table.startedAt" />
+        </div>
+    </div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-4 col-sm-8">
+			<button class="btn btn-primary" type="submit" ng-click="vm.save()">Save</button>
+			<a href="#/SampleTable" class="btn btn-default">Cancel</a>
+		</div>
+	</div>
+</form>

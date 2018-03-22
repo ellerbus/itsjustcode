@@ -1,0 +1,39 @@
+{% set base_class = table.name | pascal_case -%}
+{% set varname = base_class | short_name -%}
+
+<p ng-show="vm.{{ varname }} == null" class="text-center">
+	<i class="fa fa-spinner fa-spin"></i> Gathering the requested {{ base_class }} Data ...
+</p>
+
+<form name="vm.{{ varname }}Form" novalidate co-error-display co-form ng-hide="vm.{{ varname }} == null">
+
+	{% for column in table.primary_key -%}
+	<div class="form-group" ng-hide="vm.action == 'create'">
+		<label class="col-sm-4 control-label">
+			{{ column.name | label_case }}
+		</label>
+		<div class="col-sm-8 form-control-static" ng-bind="vm.{{ varname }}.{{ column.name | camel_case }}"></div>
+	</div>
+    {%- endfor %}
+
+	{% for column in table.columns -%}
+    {% if not column.primary_key %}
+    <div class="form-group">
+        <label class="col-sm-4 control-label">
+            {{ column.name | label_case }}
+        </label>
+        <div class="col-sm-8">
+            <input class="form-control" name="{{ column.name | camel_case }}" placeholder="{{ column.name | label_case }}"
+                ng-model="vm.{{ varname }}.{{ column.name | camel_case }}" />
+        </div>
+    </div>
+    {%- endif %}
+    {%- endfor %}
+
+	<div class="form-group">
+		<div class="col-sm-offset-4 col-sm-8">
+			<button class="btn btn-primary" type="submit" ng-click="vm.save()">Save</button>
+			<a href="#/{{ base_class }}" class="btn btn-default">Cancel</a>
+		</div>
+	</div>
+</form>

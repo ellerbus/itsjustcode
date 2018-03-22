@@ -1,0 +1,20 @@
+{% set base_class = table.name | pascal_case -%}
+{% set varname = base_class | short_name -%}
+{% set varnames = (base_class | short_name) + 's' -%}
+
+<p ng-show="vm.{{ varnames }} == null" class="text-center">
+	<i class="fa fa-spinner fa-spin"></i> Gathering the requested {{ base_lass }} ...
+</p>
+
+<table co-table ng-hide="vm.{{ varnames }} == null">
+	<thead>
+		<tr>{% for column in table.columns %}
+			<th>{{ column.name | label_case }}</th>
+            {%- endfor %}
+		</tr>
+	</thead>
+	<tr ng-repeat="{{ varname }} in vm.{{ varnames }}">{% for column in table.columns %}
+		<td ng-bind="{{ varname }}.{{ column.name | camel_case }}"></td>
+        {%- endfor %}
+	</tr>
+</table>
