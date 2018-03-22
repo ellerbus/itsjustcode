@@ -2,7 +2,7 @@ import unittest
 
 from itsjustcode.utils import (
     split_name, short_name, spine_case, snake_case,
-    camel_case, pascal_case
+    camel_case, pascal_case, label_case
 )
 
 
@@ -25,3 +25,6 @@ class TestUtils(object):
 
     def test_pascal_case(self):
         assert pascal_case('Some_FUNNYName') == 'SomeFunnyName'
+
+    def test_label_case(self):
+        assert label_case('Some_FUNNYName') == 'Some Funny Name'

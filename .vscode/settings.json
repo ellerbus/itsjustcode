@@ -6,5 +6,6 @@
     },
     "[html]": {
         "editor.formatOnSave": false
-    }
+    },
+    "editor.insertSpaces": true
 }
