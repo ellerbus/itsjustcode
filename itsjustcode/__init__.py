@@ -6,11 +6,15 @@ from sqlalchemy import MetaData, create_engine
 from jinja2 import Template, Environment, FileSystemLoader
 from jinja2.filters import FILTERS
 
-from .utils import (
+from .strutils import (
     split_name, short_name,
     spine_case, snake_case,
     camel_case, pascal_case,
     label_case
+)
+
+from .typeutils (
+    typescript_type, python_type
 )
 
 FILTERS['split_name'] = split_name
@@ -20,6 +24,9 @@ FILTERS['snake_case'] = snake_case
 FILTERS['camel_case'] = camel_case
 FILTERS['pascal_case'] = pascal_case
 FILTERS['label_case'] = label_case
+
+FILTERS['typescript_type'] = typescript_type
+FILTERS['python_type'] = python_type
 
 
 # def get_absolute_path(path):

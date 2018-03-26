@@ -1,12 +1,12 @@
 import unittest
 
-from itsjustcode.utils import (
+from itsjustcode.strutils import (
     split_name, short_name, spine_case, snake_case,
     camel_case, pascal_case, label_case
 )
 
 
-class TestUtils(object):
+class TestStrUtils(object):
 
     def test_split_name(self):
         assert split_name('Some_FUNNYName') == ['Some', 'FUNNY', 'Name']
