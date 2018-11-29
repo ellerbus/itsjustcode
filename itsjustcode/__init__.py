@@ -1,21 +1,15 @@
-import __main__
 import os
 import sys
 
-from sqlalchemy import MetaData, create_engine
-from jinja2 import Template, Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, Template
 from jinja2.filters import FILTERS
+from sqlalchemy import MetaData, create_engine
 
-from .strutils import (
-    split_name, short_name,
-    spine_case, snake_case,
-    camel_case, pascal_case,
-    label_case
-)
+import __main__
 
-from .typeutils (
-    typescript_type, python_type
-)
+from .language import plural, singular
+from .strutils import (camel_case, label_case, pascal_case, short_name,
+                       snake_case, spine_case, split_name)
 
 FILTERS['split_name'] = split_name
 FILTERS['short_name'] = short_name
@@ -24,24 +18,16 @@ FILTERS['snake_case'] = snake_case
 FILTERS['camel_case'] = camel_case
 FILTERS['pascal_case'] = pascal_case
 FILTERS['label_case'] = label_case
-
-FILTERS['typescript_type'] = typescript_type
-FILTERS['python_type'] = python_type
-
-
-# def get_absolute_path(path):
-#     if path[0] == '.':
-#         current_dir = os.path.abspath(os.curdir)
-#         path = os.path.join(current_dir, path)
-#         path = os.path.abspath(path)
-#     return path
+FILTERS['plural'] = plural
+FILTERS['singular'] = singular
 
 
 def get_template_search_paths(user_defined_paths):
     search_paths = []
 
-    for path in user_defined_paths.split(';'):
-        search_paths.append(path.rstrip())
+    if user_defined_paths is not None:
+        for path in user_defined_paths.split(';'):
+            search_paths.append(path.rstrip())
 
     built_in = os.path.dirname(__file__)
     built_in = os.path.join(built_in, 'templates/')
@@ -84,7 +70,7 @@ def generateit(**kwargs):
         raise ValueError('engine or db_uri must be provided')
 
     if template_file is None:
-        raise ValueError('template_file or template_contents must be provided')
+        raise ValueError('template_file must be provided')
 
     if engine is None:
         engine = create_engine(db_uri)

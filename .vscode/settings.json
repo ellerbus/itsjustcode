@@ -1,11 +1,24 @@
 {
+    "python.pythonPath": "env\\Scripts\\python.exe",
+    "python.linting.pep8Args": [
+        "--ignore=E731"
+    ],
+    "python.unitTest.unittestEnabled": false,
+    "python.unitTest.pyTestEnabled": true,
+    "python.unitTest.nosetestsEnabled": false,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "editor.formatOnSave": true,
     "files.exclude": {
-        "**/*.pyc": true,
-        "**/*.map": true,
-        "**/__pycache__": true,
+        "**/.cache": true,
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/CVS": true,
+        "**/env": true,
+        "**/.pytest_cache": true,
+        "**/__pycache__": true
     },
-    "[html]": {
-        "editor.formatOnSave": false
-    },
-    "editor.insertSpaces": true
 }

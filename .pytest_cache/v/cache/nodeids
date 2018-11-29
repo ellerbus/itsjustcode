@@ -1,0 +1,8 @@
+[
+  "tests/language_test.py::TestJinjaLanguageFilters::test_plural_person",
+  "tests/language_test.py::TestJinjaLanguageFilters::test_plural_bus",
+  "tests/language_test.py::TestJinjaLanguageFilters::test_plural_run",
+  "tests/language_test.py::TestJinjaLanguageFilters::test_singular_people",
+  "tests/language_test.py::TestJinjaLanguageFilters::test_singular_buses",
+  "tests/language_test.py::TestJinjaLanguageFilters::test_singular_runs"
+]

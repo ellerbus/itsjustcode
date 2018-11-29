@@ -10,7 +10,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='itsjustcode',
-      version='0.2',
+      version='0.3',
       description='Database First Code Generator that uses the SQL Alchemy and Jinja2',
       long_description=long_description,
       long_description_content_type='text/markdown',
