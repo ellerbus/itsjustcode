@@ -1,8 +1,20 @@
 [
+  "tests/filter_test.py::TestJinjaFilters::test_short_name",
+  "tests/filter_test.py::TestJinjaFilters::test_spine_case",
+  "tests/filter_test.py::TestJinjaFilters::test_snake_case",
+  "tests/filter_test.py::TestJinjaFilters::test_camel_case",
+  "tests/filter_test.py::TestJinjaFilters::test_pascal_case",
   "tests/language_test.py::TestJinjaLanguageFilters::test_plural_person",
   "tests/language_test.py::TestJinjaLanguageFilters::test_plural_bus",
   "tests/language_test.py::TestJinjaLanguageFilters::test_plural_run",
   "tests/language_test.py::TestJinjaLanguageFilters::test_singular_people",
   "tests/language_test.py::TestJinjaLanguageFilters::test_singular_buses",
-  "tests/language_test.py::TestJinjaLanguageFilters::test_singular_runs"
+  "tests/language_test.py::TestJinjaLanguageFilters::test_singular_runs",
+  "tests/strutils_test.py::TestStrUtils::test_split_name",
+  "tests/strutils_test.py::TestStrUtils::test_short_name",
+  "tests/strutils_test.py::TestStrUtils::test_spine_case",
+  "tests/strutils_test.py::TestStrUtils::test_snake_case",
+  "tests/strutils_test.py::TestStrUtils::test_camel_case",
+  "tests/strutils_test.py::TestStrUtils::test_pascal_case",
+  "tests/strutils_test.py::TestStrUtils::test_label_case"
 ]
